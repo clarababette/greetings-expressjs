@@ -1,0 +1,126 @@
+body {
+    display: grid;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    padding-top: 1vw;
+    grid-template-columns: 1fr 1fr 1fr;
+    overflow: hidden;
+}
+
+.heading {
+    grid-column: 1 / span 3;
+}
+
+.alreadyGreeted {
+    grid-column: span 3;
+}
+
+.name {
+    grid-column: 2 / 3;
+}
+
+.english {
+    grid-column: 1 / span 1;
+    grid-row: 4;
+}
+
+.swahili {
+    grid-column: 2 / span 1;
+    grid-row: 4;
+}
+
+.hungarian {
+    grid-column: 3 / span 1;
+    grid-row: 4;
+}
+
+.greetMe {
+    grid-column: 2 / 3;
+    grid-row: 5;
+}
+
+.greeting {
+    grid-column: 1 / span 3;
+    grid-row: 6;
+}
+
+.joined {
+    grid-column: 1 / span 3;
+    grid-row: 7;
+}
+
+.reset {
+    grid-column: 2 / 3;
+    grid-row: 8;
+}
+
+h1 {
+    font-family: 'Alice', serif;  
+    font-size: 6vw;
+    text-align: center;
+    margin: 1vw;
+    align-content: center;
+}
+
+h2 {
+    font-family: 'Alice', serif;  
+    font-size: 2.5vw;
+    text-align: center;
+    margin-top: 0;
+}
+
+p {
+    font-family: 'Raleway', sans-serif;
+    font-size: 2.5vw;
+    margin: 0;
+}
+
+
+/*COLORS*/
+.darkgreen-background {
+    background-color: #21452b;
+}
+
+.darkgreen {
+    color: #21452b;
+}
+
+.bone-background {
+    background-color:#E6E5DD;
+}
+
+.bone {
+    color:#E6E5DD;
+}
+
+.darkgrey-background {
+    background-color: #3d4341;
+}
+
+.darkgrey {
+    color: #3d4341;
+}
+
+.lightgreen-background {
+    background-color: #bfd9c6;
+}
+
+.lightgreen {
+    color: #bfd9c6;
+}
+
+.pink-background {
+    background-color: #A95765;
+}
+
+.pink {
+    color: #A95765;
+}
+
+.lightpink-background {
+    background-color: #fde7ea;
+}
+
+.lightpink {
+    color: #fde7ea;
+}
