@@ -12,29 +12,29 @@
 <body class="lightgreen-background">
     <div class="greetex bone-background">
         <h1 class="heading darkgreen">Greetings</h1>
-        <h2 class="alreadyGreeted">Join the 20 other people that have already been greeted.</h2>
-        <input type="text" name="" value="" placeholder="enter your name" class="name">
+        <h2 class="alreadyGreeted"></h2>
+        <input type="text" name="" placeholder="enter your name" class="name">
         <div class="english">
-            <input type="radio" class="language" value="english">
+            <input type="radio" name="languageRadio" class="language" value="english">
             <label for="english">English</label>
         </div>
         <div class="swahili">
-            <input type="radio" class="language" value="swahili">
+            <input type="radio" name="languageRadio" class="language" value="swahili">
             <label for="swahili">Kiswahili</label>
         </div>
         <div class="hungarian">
-            <input type="radio" class="language" value="hungarian">
+            <input type="radio" name="languageRadio" class="language" value="hungarian">
             <label for="hungarian">Hungarian</label>
         </div>
-        <input type="button" class="greetMe lightgreen darkgreen-background" value="Greet me!">
-        <div class="message">
-            <p class="greeting">Hello, Clara</p>
-            <p class="joined">You are now part of the 20 people that have been greeted.</p>
+        <input type="button" class="greetMe lightgreen darkgreen-background" name="button" value="Greet me!">
+        <div class="message hidden">
+            <h2 class="greeting">Hello, Clara</h2>
+            <h2 class="joined">You are now part of the 20 people that have been greeted.</h2>
         </div>
-        <input type="button" class="reset lightpink pink-background" value="Reset">
+        <input type="button" class="reset lightpink pink-background" name="button" value="Reset">
     </div>
         
 </body>
 <script src="greet.js" charset="utf-8"></script>
-<script src="greet-DOM.js" charset="utf-8"></script>
+<script src="greet-dom.js" charset="utf-8"></script>
 </html>

@@ -52,7 +52,7 @@ body {
 
 .alreadyGreeted {
     grid-column: span 4;
-    grid-row: 3;
+    grid-row: 3 span 2;
 }
 
 .name {
@@ -91,8 +91,9 @@ body {
 
 .message {
     grid-column: 1 / span 4;
-    grid-row: 13;
+    grid-row: 3;
     justify-self: center;
+    color: hotpink;
    
 }
 
@@ -131,6 +132,10 @@ p {
     margin: 0;
 }
 
+.hidden {
+    display: none;
+}
+
 @media only screen and (min-width: 600px) {
    
     * {
@@ -161,9 +166,11 @@ p {
         display: grid;
         padding: 3vw;
         grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: repeat(4, 0.75fr) repeat(2, 1fr) repeat(2, 1.25fr);
         overflow: hidden;
-        row-gap: 2vw;
+        row-gap: 0;
         align-content: center;
+        align-items: center;
         border: #3d4341 solid;
         border-width: 1px;
         border-radius: 5px;
@@ -172,47 +179,49 @@ p {
         
     }
     
-    .language {
-        height: 2.5vw;
+    input[type=radio] {
+        border: 0px;
+        width: 2vw;
+        height: 2vw;
     }
     
     .heading {
         grid-column: 1 / span 3;
-        grid-row: 1;
+        grid-row: 1 / span 2;
     }
     
     .alreadyGreeted {
-        grid-column: span 3;
-        grid-row: 2;
+        grid-column: 1 / span 3;
+        grid-row: 3 / span 2;
     }
     
     .name {
         grid-column: 2 / 3;
-        grid-row: 3;
+        grid-row: 5;
         text-align: center;
     }
     
     .english {
         grid-column: 1 / span 1;
-        grid-row: 4;
+        grid-row: 6;
         justify-self: center;
     }
     
     .swahili {
         grid-column: 2 / span 1;
-        grid-row: 4;
+        grid-row: 6;
         justify-self: center;
     }
     
     .hungarian {
         grid-column: 3 / span 1;
-        grid-row: 4;
+        grid-row: 6;
         justify-self: center;
     }
     
     .greetMe {
         grid-column: 2 / 3;
-        grid-row: 5;
+        grid-row: 7;
         width: min-content;
         justify-self: center;
         border: none;
@@ -222,7 +231,7 @@ p {
     
     .message {
         grid-column: 1 / span 3;
-        grid-row: 6;
+        grid-row: 3 / span 2;
         justify-self: center;
        
     }
@@ -230,7 +239,7 @@ p {
     
     .reset {
         grid-column: 2 / 3;
-        grid-row: 7;
+        grid-row: 8;
         width: min-content;
         justify-self: center;
         padding: 1vw;

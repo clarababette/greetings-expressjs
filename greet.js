@@ -13,17 +13,16 @@ if(localStorage['peopleGreeted']) {
 
 function greetEveryone() {
     var name = "";
+    var afterHello = "";
 
     function addToCount() {
         numGreeted ++;
         localStorage.setItem('countGreeted',numGreeted);
-        console.log(numGreeted);
     }
 
     function updateNames() {
-        namesGreeted[name] = 'greeted';
+        namesGreeted[name.toLowerCase()] = 'greeted';
         localStorage.setItem('peopleGreeted', JSON.stringify(namesGreeted));
-        console.log(namesGreeted);
     }
     
     function getCount() {
@@ -32,10 +31,40 @@ function greetEveryone() {
 
     function setName(newname) {
         name = newname.trim();
-        if (namesGreeted[name] !== 'greeted') {
+        if (namesGreeted[name.toLowerCase()] !== 'greeted') {
             addToCount();
             updateNames();
+            afterHello = newNameMsg();
+        } else {
+            afterHello = returnNameMsg();
         }
+    }
+
+    function beforeGreet() {
+        switch(getCount()) {
+            case null:
+                return "Go ahead; enter your name to be the first one greeted!";
+            case '1':
+                return "Join the one other person to have been greeted.";
+            default:
+                return "Join the " + getCount() + " other people that have already been greeted!";
+
+        }
+    }
+
+    function newNameMsg() {
+        if (getCount() == 1) {
+            return 'Congrats! You are the first person to be greeted.';
+        }
+        return 'You are now part of the ' + numGreeted + ' people that have been greeted.';
+    }
+
+    function returnNameMsg() {
+        return 'Welcome back!';
+    }
+
+    function additionalMsg() {
+        return afterHello;
     }
 
     function englishGreeting() {
@@ -62,11 +91,10 @@ function greetEveryone() {
     }
 
     function greetMeIn(nameIn,languageIn) {
-        setName(nameIn);
-        console.log(nameIn);
-        console.log(name);
-       return whichLanguage(languageIn);
-
+        if(nameIn !== "") {
+            setName(nameIn);
+            return whichLanguage(languageIn);
+        } 
     }
 
     function reset() {
@@ -77,6 +105,9 @@ function greetEveryone() {
 
     return {
         greetMeIn,
+        newNameMsg,
+        beforeGreet,
+        returnNameMsg,
         addToCount,
         updateNames,
         getCount,
@@ -85,6 +116,7 @@ function greetEveryone() {
         swahiliGreeting,
         hungarianGreeting,
         whichLanguage,
+        additionalMsg,
         reset
     }
 }
