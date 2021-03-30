@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="greet.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Alice&family=Raleway:ital@0;1&display=swap" rel="stylesheet">
+    <title>Greetings</title>
+</head>
+<body class="lightgreen-background">
+    <div class="greetex bone-background">
+        <h1 class="heading darkgreen">Greetings!</h1>
+        <h2 class="alreadyGreeted"></h2>
+        <input type="text" name="" placeholder="enter your name" class="name">
+        <div class="english">
+            <input type="radio" name="languageRadio" class="language" value="english">
+            <label for="english">English</label>
+        </div>
+        <div class="swahili">
+            <input type="radio" name="languageRadio" class="language" value="swahili">
+            <label for="swahili">Kiswahili</label>
+        </div>
+        <div class="hungarian">
+            <input type="radio" name="languageRadio" class="language" value="hungarian">
+            <label for="hungarian">Hungarian</label>
+        </div>
+        <input type="button" class="greetMe lightgreen darkgreen-background" name="button" value="Greet me!">
+        <div class="message hidden">
+            <h2 class="greeting"></h2>
+            <h2 class="joined"></h2>
+        </div>
+        <input type="button" class="reset lightpink pink-background" name="button" value="Reset">
+    </div>
+        
+</body>
+<script src="greet.js" charset="utf-8"></script>
+<script src="greet-dom.js" charset="utf-8"></script>
+</html>
