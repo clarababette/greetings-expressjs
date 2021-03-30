@@ -1,19 +1,29 @@
 var numGreeted = 0;
+var namesGreeted = {};
 
 
 if (localStorage['countGreeted']) {
     numGreeted = Number(localStorage['countGreeted']);
 }
 
+if(localStorage['peopleGreeted']) {
+    namesGreeted = JSON.parse(localStorage.getItem('peopleGreeted'));
+}
+
+
 function greetEveryone() {
     var name = "";
-    var namesGreeted = {};
 
     function addToCount() {
         numGreeted ++;
         localStorage.setItem('countGreeted',numGreeted);
         console.log(numGreeted);
+    }
 
+    function updateNames() {
+        namesGreeted[name] = 'greeted';
+        localStorage.setItem('peopleGreeted', JSON.stringify(namesGreeted));
+        console.log(namesGreeted);
     }
     
     function getCount() {
@@ -22,10 +32,10 @@ function greetEveryone() {
 
     function setName(newname) {
         name = newname.trim();
-    }
-
-    function addToNameList() {
-        
+        if (namesGreeted[name] !== 'greeted') {
+            addToCount();
+            updateNames();
+        }
     }
 
     function englishGreeting() {
@@ -51,14 +61,24 @@ function greetEveryone() {
         }
     }
 
+    function greetMeIn(nameIn,languageIn) {
+        setName(nameIn);
+        console.log(nameIn);
+        console.log(name);
+       return whichLanguage(languageIn);
+
+    }
+
     function reset() {
         localStorage.clear();
         numGreeted = 0;
+        namesGreeted = {};
     }
 
     return {
+        greetMeIn,
         addToCount,
-        addToNameList,
+        updateNames,
         getCount,
         setName,
         englishGreeting,
