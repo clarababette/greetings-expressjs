@@ -53,7 +53,7 @@ body {
 }
 
 .name {
-    grid-column: 2 / 4;
+    grid-column: span 4;
     grid-row: 5;
     text-align: center;
 }
