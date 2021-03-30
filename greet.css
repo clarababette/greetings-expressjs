@@ -25,7 +25,7 @@ body {
     justify-self: center;
     align-self: center;
     width: 70vw;
-    height: 80vh;
+    height: 70vh;
     margin: auto;
     display: grid;
     padding: 7.5vw;
@@ -43,7 +43,7 @@ body {
 }
 
 .heading {
-    grid-column: 2 / span 2;
+    grid-column: span 4;
     grid-row: 1;
 }
 
