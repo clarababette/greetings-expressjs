@@ -100,13 +100,25 @@ body {
 
 .reset {
     grid-column:  2 / 4;
-    grid-row: 15;
+    grid-row: 13;
     width: min-content;
     justify-self: center;
     padding: 2vw;
     border: none;
     border-radius: 5px;
 }
+
+.test {
+    grid-column: 4 / span 1;
+    grid-row: 13;
+    width: 100%;
+    
+}
+
+h5 {
+    font-size: 5pt;
+}
+
 
 h1 {
     font-family: 'Alice', serif;  
@@ -137,6 +149,10 @@ p {
 }
 
 @media only screen and (min-width: 600px) {
+
+    h5 {
+        font-size: 12pt;
+    }
    
     * {
         font-family: 'Raleway', sans-serif;
@@ -247,6 +263,13 @@ p {
         border-radius: 5px;
     }
     
+    .test {
+        grid-column: 3 / span 1;
+        grid-row: 8;
+        width: 100%;
+        
+    }
+
     h1 {
         font-family: 'Alice', serif;  
         font-size: 6vw;
