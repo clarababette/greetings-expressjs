@@ -1,6 +1,8 @@
+
 describe("The greetings factory function", function(){
     it("should retain the count after refreshing", function(){
         let greeting = greetEveryone();
+        
         assert.equal(greeting.getCount(),3);
     });
     it("should be able to reset the count", function(){
@@ -43,6 +45,8 @@ describe("The greetings factory function", function(){
         assert.equal(greeting.getCount(),3);
 
     });
+
+   
 
 
 

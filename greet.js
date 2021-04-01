@@ -14,6 +14,7 @@ if(localStorage['peopleGreeted']) {
 function greetEveryone() {
     var name = "";
     var afterHello = "";
+    var newUser = false;
 
     function addToCount() {
         numGreeted ++;
@@ -21,8 +22,12 @@ function greetEveryone() {
     }
 
     function updateNames() {
-        namesGreeted[name.toLowerCase()] = 'greeted';
+        namesGreeted[name] = [presentationName(),0,0,0];
         localStorage.setItem('peopleGreeted', JSON.stringify(namesGreeted));
+    }
+
+    function cellValues() {
+        return namesGreeted[name];
     }
     
     function getCount() {
@@ -30,14 +35,24 @@ function greetEveryone() {
     }
 
     function setName(newname) {
-        name = newname.trim();
-        if (namesGreeted[name.toLowerCase()] !== 'greeted') {
+        name = newname.trim().toLowerCase();
+        if (namesGreeted[name] === undefined) {
+            newUser = true;
             addToCount();
             updateNames();
             afterHello = newNameMsg();
         } else {
             afterHello = returnNameMsg();
+            newUser = false;
         }
+    }
+
+    function isNew() {
+        return newUser;
+    }
+
+    function presentationName() {
+        return name.charAt(0).toUpperCase() + name.slice(1);
     }
 
     function beforeGreet() {
@@ -68,33 +83,38 @@ function greetEveryone() {
     }
 
     function englishGreeting() {
-        return "Hello, " + name;
+        return "Hello, " + presentationName();
     }
 
     function swahiliGreeting() {
-        return "Jambo, " + name;
+        return "Jambo, " + presentationName();
     }
 
     function hungarianGreeting() {
-        return "Szia, " + name;
+        return "Szia, " + presentationName();
     }
 
     function whichLanguage(language) {
         switch(language) {
             case 'english':
+                namesGreeted[name][1] ++;
+                localStorage.setItem('peopleGreeted', JSON.stringify(namesGreeted));
                 return englishGreeting();
             case 'swahili':
+                namesGreeted[name][2] ++;
+                localStorage.setItem('peopleGreeted', JSON.stringify(namesGreeted));
                 return swahiliGreeting();
             case 'hungarian':
+                namesGreeted[name][3] ++;
+                localStorage.setItem('peopleGreeted', JSON.stringify(namesGreeted));
                return hungarianGreeting();
         }
     }
 
     function greetMeIn(nameIn,languageIn) {
-        if(nameIn !== "") {
+
             setName(nameIn);
             return whichLanguage(languageIn);
-        } 
     }
 
     function reset() {
@@ -104,6 +124,8 @@ function greetEveryone() {
     }
 
     return {
+        isNew,
+        cellValues,
         greetMeIn,
         newNameMsg,
         beforeGreet,
