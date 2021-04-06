@@ -10,12 +10,24 @@ var alreadyGreeted = document.querySelector('.alreadyGreeted');
 var table = document.querySelector('.nametable');
 var tableSect = document.querySelector('.weveGreeted');
 
+
+
+if (localStorage['countGreeted']) {
+    numGreeted = Number(localStorage['countGreeted']);
+}
+
+if(localStorage['peopleGreeted']) {
+    namesGreeted = JSON.parse(localStorage.getItem('peopleGreeted'));
+}
+
 alreadyGreeted.innerHTML = greetings.beforeGreet();
 
 
 if(localStorage['peopleGreeted']) {
     tableSect.classList.remove("hidden");
 }
+
+
 
 for (var x in namesGreeted) {
     table.insertRow(1);
@@ -32,27 +44,26 @@ for (var x in namesGreeted) {
 
 greetBtn.addEventListener('click', function() {
     username = document.querySelector('.name').value;
-    languageSelected = document.querySelector(".language:checked").value;
     var notLetter = /[^A-z]/g;
     
+    try {
+        if(notLetter.test(username.trim())) throw "Enter a name that only contains letters.";
+        if(username == "") throw "Please enter your name.";
+        if(document.querySelector(".language:checked") === null) throw "Please select a language.";
+    }
     
+    catch(err) {
+        alert(err);
+        if (alreadyGreeted.classList.contains("hidden")) {
+            alreadyGreeted.classList.remove("hidden");
+            fullMsg.classList.add("hidden");
+        }
+        document.querySelector('.name').value = "";
+        return;
+    }
+    languageSelected = document.querySelector(".language:checked").value;
     
 
-    if (username !== "") {
-        
-        try {
-            if(notLetter.test(username.trim())) throw "Enter a name that only contains letters.";
-        }
-        
-        catch(err) {
-            alert(err);
-            if (alreadyGreeted.classList.contains("hidden")) {
-                alreadyGreeted.classList.remove("hidden");
-                fullMsg.classList.add("hidden");
-                }
-            document.querySelector('.name').value = "";
-            return;
-         }
 
         greetMsg.innerHTML = greetings.greetMeIn(username,languageSelected);
         nextMsg.innerHTML = greetings.additionalMsg();
@@ -66,12 +77,6 @@ greetBtn.addEventListener('click', function() {
             document.querySelector('.weveGreeted').classList.remove("hidden");
     
         }
-    } else {
-        if (alreadyGreeted.classList.contains("hidden")) {
-        alreadyGreeted.classList.remove("hidden");
-        fullMsg.classList.add("hidden");
-        }
-    }
 
     var cellData = greetings.cellValues();
 
@@ -96,6 +101,9 @@ greetBtn.addEventListener('click', function() {
             }
         }
     }  
+
+    localStorage.setItem('peopleGreeted', JSON.stringify(namesGreeted));
+    localStorage.setItem('countGreeted',numGreeted);
 
 });
 
