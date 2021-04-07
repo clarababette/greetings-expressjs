@@ -7,7 +7,7 @@ var greetMsg = document.querySelector('.greeting');
 var nextMsg = document.querySelector('.joined');
 var fullMsg = document.querySelector('.message');
 var alreadyGreeted = document.querySelector('.alreadyGreeted');
-var table = document.querySelector('.nametable');
+var list = document.querySelector('.nameList');
 var tableSect = document.querySelector('.weveGreeted');
 
 
@@ -27,19 +27,19 @@ if(localStorage['peopleGreeted']) {
     tableSect.classList.remove("hidden");
 }
 
-
-
 for (var x in namesGreeted) {
-    table.insertRow(1);
-        table.rows[1].classList.add(x);
-        table.rows[1].insertCell(0);
-        table.rows[1].insertCell(1);
-        table.rows[1].insertCell(2);
-        table.rows[1].insertCell(3);
-        table.rows[1].cells[0].innerHTML = namesGreeted[x][0];
-        table.rows[1].cells[1].innerHTML = namesGreeted[x][1];
-        table.rows[1].cells[2].innerHTML = namesGreeted[x][2];
-        table.rows[1].cells[3].innerHTML = namesGreeted[x][3];
+    let nameLi = document.createElement("LI");
+    let nameMore = document.createElement("P");
+    nameMore.innerHTML = greetInfo(namesGreeted[x]);
+    nameLi.innerHTML = namesGreeted[x][0];
+    nameLi.appendChild(nameMore);
+    list.appendChild(nameLi);
+    nameLi.classList.add(x);
+    nameMore.classList.add('hidden')
+    nameLi.addEventListener('click', function() {
+        this.classList.toggle('more');
+        this.children[0].classList.toggle('hidden');
+    });
 }
 
 greetBtn.addEventListener('click', function() {
@@ -77,35 +77,49 @@ greetBtn.addEventListener('click', function() {
             document.querySelector('.weveGreeted').classList.remove("hidden");
     
         }
+        localStorage.setItem('peopleGreeted', JSON.stringify(namesGreeted));
+        localStorage.setItem('countGreeted',numGreeted);
 
-    var cellData = greetings.cellValues();
-
-    if (greetings.isNew()) {
-        table.insertRow(1);
-        table.rows[1].classList.add(username.toLowerCase());
-        table.rows[1].insertCell(0);
-        table.rows[1].insertCell(1);
-        table.rows[1].insertCell(2);
-        table.rows[1].insertCell(3);
-        table.rows[1].cells[0].innerHTML = cellData[0];
-        table.rows[1].cells[1].innerHTML = cellData[1];
-        table.rows[1].cells[2].innerHTML = cellData[2];
-        table.rows[1].cells[3].innerHTML = cellData[3];
-    }
-    else {
-        for (i=1; i < table.rows.length; i++) {
-            if(table.rows[i].classList.contains(username.toLowerCase())) {
-                table.rows[i].cells[1].innerHTML = cellData[1];
-                table.rows[i].cells[2].innerHTML = cellData[2];
-                table.rows[i].cells[3].innerHTML = cellData[3];
-            }
+        var cellData = greetings.cellValues();
+        
+        if (greetings.isNew()) {
+            let nameLi = document.createElement("LI");
+            let nameMore = document.createElement("P");
+            nameLi.innerHTML = cellData[0];
+            nameMore.innerHTML = greetInfo(cellData);
+            nameMore.classList.add('hidden');
+            nameLi.appendChild(nameMore);
+            list.appendChild(nameLi);
+            nameLi.classList.add(username.toLowerCase());
+            nameLi.addEventListener('click', function() {
+                this.classList.toggle('more');
+                this.children[0].classList.toggle('hidden');
+            });
+        } else {
+            document.querySelector('.' + username.toLowerCase()).children[0].innerHTML = greetInfo(cellData);
         }
-    }  
+        
 
-    localStorage.setItem('peopleGreeted', JSON.stringify(namesGreeted));
-    localStorage.setItem('countGreeted',numGreeted);
+
 
 });
+
+
+function greetInfo(nameInfo) {
+    function langInfo(num,lang) {
+        switch(num) {
+            case 0:
+                return "We have not yet greeted " + nameInfo[0] + " in " + lang + ".";
+            case 1:
+                return "We have greeted " + nameInfo[0] + " once in " + lang + ".";
+            case 2:
+                return "We have greeted " + nameInfo[0] + " twice in " + lang + ".";
+            default:
+                return "We have greeted " + nameInfo[0] + " in " + lang + " " + num + " times.";
+        }
+    }
+    return langInfo(nameInfo[1],"English") + " " + langInfo(nameInfo[2],"Kiswahili") + " " + langInfo(nameInfo[3],"Hungarian");
+}
 
 resetBtn.addEventListener('click', function() {
     greetings.reset();
@@ -114,9 +128,9 @@ resetBtn.addEventListener('click', function() {
         alreadyGreeted.classList.remove("hidden");
         fullMsg.classList.add("hidden");
         }
-    for (i=table.rows.length-1; i > 0; i--) {
-        table.deleteRow(i);
-     }
+    while (list.hasChildNodes()) {
+        list.removeChild(list.firstChild);
+    }
     if (!document.querySelector('.weveGreeted').classList.contains("hidden")) {
         document.querySelector('.weveGreeted').classList.add("hidden");
 

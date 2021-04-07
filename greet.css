@@ -4,27 +4,31 @@
 
 * {
     font-family: 'Raleway', sans-serif;
-    font-size: 3.5vw;
+    font-size: clamp(10px,3vw,14px);
     line-height: 1.3;
     color: #27272A;
 }
 
 html {
     height: 100%;
-    overflow: hidden;
+    overflow: scroll;
+    
 }
 
 body {
-    overflow: hidden;
     background-image: url("background.svg");
+    overflow-x: scroll;
     background-repeat: repeat;
     background-size: cover;
     display: grid;
     align-content: center;
     justify-content: center;
     grid-template-columns: 1fr;
-    grid-template-rows: 60% 30%;
-    height: 98vh;
+    grid-template-rows: auto auto;
+    row-gap: 20px;
+    height: min-content;
+    padding-top: 3vh;
+    padding-bottom: 2vh;
     margin-left: 0;
     margin-right: 0;
     
@@ -33,32 +37,34 @@ body {
 .greetex {
     justify-self: center;
     justify-items: center;
-    width: 80vw;
-    height: 85%;
+    width: clamp(250px,80vw,400px);
+    height: clamp(300px,45vh,500px);
     margin: auto;
     display: grid;
+    row-gap: 1vw;
     padding: 5vw;
     grid-template-columns: repeat(4,1fr);
-    grid-template-rows: repeat(14,1fr);
+    grid-template-rows: repeat(2,0.7fr) repeat(4,1.4fr) repeat(8,1fr);
     overflow: hidden;
-    row-gap: 2vw;
     align-content: space-around;
     border: #3d4341 solid;
     border-width: 1px;
     border-radius: 5px;
-    align-items: center;
-    margin: 0;    
+    align-items: center;   
+}
+
+h5 {
+    margin: 0;
 }
 
 .weveGreeted {
     justify-self: center;
-    width: 80vw;
-    height: 75%;
+    width: clamp(250px,80vw,400px);
+    height: auto;
     margin: auto;
     display: grid;
     padding: 5vw;
     grid-template-columns: 1fr;
-    overflow: scroll;
     row-gap: 2vw;
     align-content: start;
     justify-content: center;
@@ -68,13 +74,8 @@ body {
     margin: 0;
 }
 
-th {
-    width: 25%;
-    font-size: 3vw;
-}
-
 .language {
-    height: 2.5vw;
+    height: clamp(8px,2.5vw,10px);;
 }
 
 .heading {
@@ -115,7 +116,7 @@ th {
     justify-self: center;
     border: none;
     border-radius: 5px;
-    padding: 2vw;
+    padding: clamp(5px,1.5vw,10px);
 }
 
 .message {
@@ -125,13 +126,18 @@ th {
    
 }
 
+.more {
+    color: lightslategray;
+    list-style-type: " - ";
+
+}
 
 .reset {
     grid-column:  2 / 4;
     grid-row: 12 / span 2;
     width: min-content;
     justify-self: center;
-    padding: 2vw;
+    padding: clamp(5px,1.5vw,10px);
     border: none;
     border-radius: 5px;
 }
@@ -144,23 +150,18 @@ th {
     
 }
 
-h5 {
-    font-size: 5pt;
-}
-
-
 h1 {
     font-family: 'Alice', serif;  
-    font-size: 8vw;
+    font-size: clamp(18px,7vw,24px);
     text-align: center;
-    margin-top: 1vw;
+    margin-top: 0;
     margin-bottom: 0;
-    align-content: center;
+    align-self: start;
 }
 
 h2 {
     font-family: 'Alice', serif;  
-    font-size: 4vw;
+    font-size: clamp(12px,4vw,18px);
     text-align: center;
     margin: 0;
     padding: 0;
@@ -169,62 +170,69 @@ h2 {
 
 p {
     font-family: 'Raleway', sans-serif;
-    font-size: 4vw;
+    font-size: clamp(5px,2.5vw,12px);
     margin: 0;
 }
 
 .hidden {
     display: none;
 }
+ul {
+    margin: 0;
+    list-style-type: " + ";
+}
+li:hover {
+    color: mediumpurple;
+}
 
+li p {
+    color: lightslategray;
+}
 table {
     text-align: center;
 }
 
 
 @media only screen and (min-width: 600px) {
-
-    h5 {
-        font-size: 1vw;
-        margin: 0;
-        text-align: center;
-        align-self: center;
-        justify-self: center;
-    }
-   
-    * {
+ * {
         font-family: 'Raleway', sans-serif;
-        font-size: 1.8vw;
+        font-size: clamp(14px,1.5vw,32px);
         line-height: 1.3;
     }
     
     body {
-        height: 100vh;
+        height: auto;
+        width: auto;
         overflow: hidden;
         margin: 0;
         background-image: url("background.svg");
         background-repeat: repeat;
         background-size: cover;
         display: grid;
-        grid-template-columns: 45vw 45vw;
-        grid-template-rows: 1fr;
-        justify-content: space-evenly;
+        grid-template-columns: auto auto;
+        column-gap: 10px;
+        grid-template-rows: auto;
+        justify-content: start;
+        align-content: start;
+        padding-top: 40px;
+        padding-left: 40px;
         
     }
     
+
     .greetex {
-        justify-self: center;
-        align-self: center;
-        grid-column: 1 / 2;
-        width: 40vw;
-        height: 80vh;
-        margin: auto;
+        width: clamp(200px,50vw,1000px);
+        height: auto;
+        justify-self: left;
+        align-self: start;
+        grid-column: 1;
+        margin: 0;
         display: grid;
         padding: 2vw;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 0.5fr repeat(3, 0.75fr) repeat(4, 1fr) repeat(2, 1.25fr) auto;
+        grid-template-rows: 1.75fr 2.5fr repeat(5,1fr);
         overflow: hidden;
-        row-gap: 0;
+        row-gap: 1vw;
         align-content: space-around;
         align-items: center;
         border: #3d4341 solid;
@@ -236,13 +244,12 @@ table {
     }
 
     .weveGreeted {
-        justify-self: center;
-        align-self: center;
-        width: 40vw;
+        width: clamp(100px,35vw,800px);
+        justify-self: start;
+        align-self: start;
         padding: 2vw;
-        grid-column: 2 / span 1;
-        height: 80vh;
-        margin: auto;
+        grid-column: 2;
+        margin: 0;
         display: grid;
         grid-template-columns: 1fr;
         overflow: hidden;
@@ -254,74 +261,64 @@ table {
         overflow: scroll; 
     }
 
-    table {
-        text-align: center;
-    }
 
-    td {
-        font-size: 1.5vw;
-    }
-
-    th {
-        font-size: 1.8vw;
-    }
 
     
     input[type=radio] {
         border: 0px;
-        width: 1.5vw;
-        height: 1.5vw;
+        width: 1.5vh;
+        height: 1.5vh;
     }
     
     .heading {
         grid-column: 1 / span 3;
-        grid-row: 1 / span 2;
+        grid-row: 1;
         align-self: start;
         margin: 0;
     }
     
     .alreadyGreeted {
         grid-column: 1 / span 3;
-        grid-row: 3 / span 2;
+        grid-row: 2;
     }
     
     .name {
         grid-column: 2 / 3;
-        grid-row: 5;
+        grid-row: 3;
         text-align: center;
     }
     
     .english {
-        grid-column: 1 / span 3;
-        grid-row: 6;
+        grid-column: 1 / span 1;
+        grid-row: 4;
         justify-self: center;
     }
     
     .swahili {
-        grid-column: 1 / span 3;
-        grid-row: 7;
+        grid-column: 2 / span 1;
+        grid-row: 4;
         justify-self: center;
     }
     
     .hungarian {
-        grid-column: 1 / span 3;
-        grid-row: 8;
+        grid-column: 3 / span 1;
+        grid-row: 4;
         justify-self: center;
     }
     
     .greetMe {
         grid-column: 2 / 3;
-        grid-row: 9;
+        grid-row: 5;
         width: min-content;
         justify-self: center;
         border: none;
         border-radius: 5px;
-        padding: 1vw;
+        padding: 1vh;
     }
     
     .message {
         grid-column: 1 / span 3;
-        grid-row: 3 / span 2;
+        grid-row: 2;
         justify-self: center;
        
     }
@@ -329,17 +326,17 @@ table {
     
     .reset {
         grid-column: 2 / 3;
-        grid-row: 10;
+        grid-row: 6;
         width: min-content;
         justify-self: center;
-        padding: 1vw;
+        padding: 1vh;
         border: none;
         border-radius: 5px;
     }
     
     .test {
         grid-column: 2 / span 1;
-        grid-row: 11;
+        grid-row: 7;
         width: 100%;
         height: 100%;
         align-self: center;
@@ -349,7 +346,7 @@ table {
 
     h1 {
         font-family: 'Alice', serif;  
-        font-size: 4.5vw;
+        font-size: clamp(5px,4vw,40px);
         text-align: center;
         margin-top: 1vw;
         margin-bottom: 0;
@@ -358,7 +355,7 @@ table {
     
     h2 {
         font-family: 'Alice', serif;  
-        font-size: 2.2vw;
+        font-size: clamp(5px,2vw,40px);
         text-align: center;
         margin: 0;
         padding: 0;
@@ -367,7 +364,7 @@ table {
     
     p {
         font-family: 'Raleway', sans-serif;
-        font-size: 2vw;
+        font-size: clamp(10px,1vw,14px);
         margin: 0;
     }
 

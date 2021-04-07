@@ -43,10 +43,9 @@ function greetEveryone() {
 
     function beforeGreet() {
         switch(numGreeted) {
-            case null:
             case 0:
                 return "Go ahead; enter your name to be the first one greeted!";
-            case '1':
+            case 1:
                 return "Join the one other person to have been greeted.";
             default:
                 return "Join the " + numGreeted + " other people that have already been greeted!";
