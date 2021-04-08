@@ -41,10 +41,10 @@ body {
     height: clamp(300px,45vh,500px);
     margin: auto;
     display: grid;
-    row-gap: 1vw;
+    row-gap: 2vw;
     padding: 5vw;
     grid-template-columns: repeat(4,1fr);
-    grid-template-rows: repeat(2,0.7fr) repeat(4,1.4fr) repeat(8,1fr);
+    grid-template-rows: repeat(2,0.7fr) repeat(4,1.4fr) repeat(9,1fr);
     overflow: hidden;
     align-content: space-around;
     border: #3d4341 solid;
@@ -65,7 +65,7 @@ h5 {
     display: grid;
     padding: 5vw;
     grid-template-columns: 1fr;
-    row-gap: 2vw;
+    row-gap: 0;
     align-content: start;
     justify-content: center;
     border: #3d4341 solid;
@@ -150,9 +150,16 @@ h5 {
     
 }
 
+.visitors-link {
+    grid-column: 2 / span 2;
+    grid-row: 15;
+    width: 100%;
+    text-align: center;
+}
+
 h1 {
     font-family: 'Alice', serif;  
-    font-size: clamp(18px,7vw,24px);
+    font-size: clamp(18px,7vw,26px);
     text-align: center;
     margin-top: 0;
     margin-bottom: 0;
@@ -161,7 +168,7 @@ h1 {
 
 h2 {
     font-family: 'Alice', serif;  
-    font-size: clamp(12px,4vw,18px);
+    font-size: clamp(12px,4vw,20px);
     text-align: center;
     margin: 0;
     padding: 0;
@@ -180,6 +187,7 @@ p {
 ul {
     margin: 0;
     list-style-type: " + ";
+    padding-top: 10px;
 }
 li:hover {
     color: mediumpurple;
@@ -209,31 +217,30 @@ table {
         background-repeat: repeat;
         background-size: cover;
         display: grid;
-        grid-template-columns: auto auto;
+        grid-template-columns: auto;
         column-gap: 10px;
         grid-template-rows: auto;
-        justify-content: start;
-        align-content: start;
+        justify-content: center;
+        align-content: center;
         padding-top: 40px;
-        padding-left: 40px;
-        padding-right: 40px;
+        
         
     }
     
 
     .greetex {
-        width: clamp(200px,50vw,1000px);
+        width: clamp(200px,80vw,1400px);
         height: auto;
         justify-self: left;
         align-self: start;
         grid-column: 1;
-        margin: 0;
+        margin: auto;
         display: grid;
         padding: 2vw;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1.75fr 2.5fr repeat(5,1fr);
+        grid-template-rows: 1.75fr 2.5fr repeat(6,1fr);
         overflow: hidden;
-        row-gap: 1vw;
+        row-gap: 2vw;
         align-content: space-around;
         align-items: center;
         border: #3d4341 solid;
@@ -245,16 +252,15 @@ table {
     }
 
     .weveGreeted {
-        width: clamp(60px,30vw,800px);
+        width: clamp(200px,80vw,1400px);
         justify-self: start;
         align-self: start;
         padding: 2vw;
-        grid-column: 2;
         margin: 0;
         display: grid;
         grid-template-columns: 1fr;
+        row-gap: 0;
         overflow: hidden;
-        row-gap: 2vw;
         align-content: start;
         border: #3d4341 solid;
         border-width: 1px;
@@ -345,6 +351,11 @@ table {
         
     }
 
+    .visitors-link {
+        grid-column: 2 / span 1;
+        grid-row: 8;
+    }
+
     h1 {
         font-family: 'Alice', serif;  
         font-size: clamp(5px,4vw,40px);
@@ -365,7 +376,7 @@ table {
     
     p {
         font-family: 'Raleway', sans-serif;
-        font-size: clamp(10px,1vw,14px);
+        font-size: clamp(10px,1.5vw,18px);
         margin: 0;
     }
 
