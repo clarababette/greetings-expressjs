@@ -27,6 +27,9 @@ if(localStorage['peopleGreeted']) {
 }
 
 greetBtn.addEventListener('click', function() {
+    if (alreadyGreeted.classList.contains("error")) {
+        alreadyGreeted.classList.remove("error");
+    }
     username = document.querySelector('.name').value;
     var notLetter = /[^A-z]/g;
     
@@ -37,7 +40,8 @@ greetBtn.addEventListener('click', function() {
     }
     
     catch(err) {
-        alert(err);
+        alreadyGreeted.innerHTML = err;
+        alreadyGreeted.classList.add("error");
         if (alreadyGreeted.classList.contains("hidden")) {
             alreadyGreeted.classList.remove("hidden");
             fullMsg.classList.add("hidden");
@@ -56,6 +60,8 @@ greetBtn.addEventListener('click', function() {
             fullMsg.classList.remove("hidden");
             }
         document.querySelector('.name').value = "";
+        document.querySelector(".language:checked").checked = false;
+
         alreadyGreeted.innerHTML = greetings.beforeGreet();
         localStorage.setItem('peopleGreeted', JSON.stringify(namesGreeted));
         localStorage.setItem('countGreeted',numGreeted);
@@ -63,8 +69,7 @@ greetBtn.addEventListener('click', function() {
             visitorsLink.classList.remove("hidden");
             }
 
-        
-
+    
 
 
 });
