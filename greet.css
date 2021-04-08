@@ -245,7 +245,7 @@ table {
     }
 
     .weveGreeted {
-        width: clamp(60px,35vw,800px);
+        width: clamp(60px,30vw,800px);
         justify-self: start;
         align-self: start;
         padding: 2vw;
