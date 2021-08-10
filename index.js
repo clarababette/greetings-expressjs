@@ -6,22 +6,6 @@ import flash from 'express-flash';
 import session from 'express-session';
 const app = express();
 const greetMe = new GreetEveryone();
-import pg from 'pg';
-const Pool = pg.Pool;
-
-let useSSL = false;
-let local = process.env.LOCAL || false;
-if (process.env.DATABASE_URL && !local) {
-  useSSL = true;
-}
-
-const connectionString =
-  process.env.DATABASE_URL || 'postgresql://localhost:5432/greetings_database';
-
-const pool = new Pool({
-  connectionString,
-  ssl: useSSL,
-});
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
