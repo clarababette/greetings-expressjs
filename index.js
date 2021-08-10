@@ -6,7 +6,8 @@ import flash from 'express-flash';
 import session from 'express-session';
 const app = express();
 const greetMe = new GreetEveryone();
-const {Client} = require('pg');
+import pg from 'pg';
+const Client = pg.Client;
 
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
@@ -21,7 +22,7 @@ client.query(
   'SELECT table_schema,table_name FROM information_schema.tables;',
   (err, res) => {
     if (err) throw err;
-    for (const row of res.rows) {
+    for (let row of res.rows) {
       console.log(JSON.stringify(row));
     }
     client.end();
