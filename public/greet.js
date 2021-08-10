@@ -192,7 +192,8 @@ export default function GreetEveryone() {
       [req.params.user]
     );
     res.render('user', {
-      english: langInfo(thisUser.username, thisUser.english, 'English'),
+      english: thisUser,
+      //langInfo(thisUser.username, thisUser.english, 'English'),
       swahili: langInfo(thisUser, thisUser.swahili, 'Swahili'),
       hungarian: langInfo(thisUser, thisUser.hungarian, 'Hungarian'),
     });
