@@ -1,24 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="greet.css">
-    <link rel="stylesheet" href="cb-palette.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Alice&family=Raleway:ital@0;1&display=swap" rel="stylesheet">
-    <title>Greetings</title>
-</head>
-<body class="pinkcb1BG">
+
     <div class="weveGreeted whitecb1BG">
         <h2>Take a look at who we've greeted so far.</h2>
         <h2>or</h2>
-        <a href="index.html"><h2>← Do some more greeting</h2></a>
-        <ul class="nameList"></ul>
+        <a href="/"><h2>← Do some more greeting</h2></a>
+        <ul class="nameList">
+            {{#each userList}}
+            <li><a href={{{userRoute}}}>{{username}}</a></li>
+            {{/each}}
+        </ul>
     </div>
         
-</body>
-<script src="greet.js" charset="utf-8"></script>
-<script src="visitors-dom.js" charset="utf-8"></script>
-</html>

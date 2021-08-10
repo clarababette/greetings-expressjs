@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="greet.css">
-    <link rel="stylesheet" href="cb-palette.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Alice&family=Raleway:ital@0;1&display=swap" rel="stylesheet">
-    <title>Greetings</title>
-</head>
-<body class="pinkcb1BG">
-    <div class="greetex whitecb1BG">
+<div class="greetex whitecb1BG">
         <h1 class="heading darkgreen">Greetings!</h1>
-        <h2 class="alreadyGreeted"></h2>
-        <input type="text" name="" placeholder="enter your name" class="name">
+        <h2 class="greeting">{{messages.greeting}}</h2>
+        <h2 class="alreadyGreeted">{{messages.info}}</h2>
+        <h2 class="error"> {{messages.error}}</h2>
+        <form action='/greet' method="POST">
+            <input type="text" name="username" placeholder="enter your name" class="name">
         <div class="english">
             <input type="radio" name="languageRadio" class="language" value="english">
             <label for="english">English</label>
@@ -27,16 +17,8 @@
             <input type="radio" name="languageRadio" class="language" value="hungarian">
             <label for="hungarian">Hungarian</label>
         </div>
-        <input type="button" class="greetMe greencb2BG" name="button" value="Greet me!">
-        <div class="message hidden">
-            <h2 class="greeting bluecb2"></h2>
-            <h2 class="joined bluecb2"></h2>
-        </div>
-        <input type="button" class="reset purplecbBG" name="button" value="Reset">
-        <a class="test" href="test/test.html"><h5>Does the logic work?</h5></a>
-        <a class="visitors-link hidden" href="visitors.html"><h5>Who else have we greeted?</h5></a>
+        <input type="submit" class="greetMe greencb2BG" name="button" value="Greet me!">
+        <input type="submit" formaction="/reset" class="reset purplecbBG" name="button" value="Reset">
+        </form>
+        <a class="visitors-link" href="/greeted"><h5>Who else have we greeted?</h5></a>
     </div>    
-</body>
-<script src="greet.js" charset="utf-8"></script>
-<script src="greet-dom.js" charset="utf-8"></script>
-</html>
