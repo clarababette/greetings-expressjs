@@ -189,7 +189,7 @@ export default function GreetEveryone() {
   async function userRoute(req, res) {
     const thisUser = await pool.query(
       'SELECT * FROM users WHERE users.username = $1',
-      req.params.user
+      [req.params.user]
     );
     res.render('user', {
       english: langInfo(thisUser.username, thisUser.english, 'English'),
