@@ -1,14 +1,14 @@
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
-import pg from 'pg';
-const Pool = pg.Pool;
-const pool = new Pool({
-  user: 'coder',
-  password: 'pg123',
-  database: 'greetings_database',
-  host: 'localhost',
-  port: 5432,
-});
+// import pg from 'pg';
+// const Pool = pg.Pool;
+// const pool = new Pool({
+//   user: 'coder',
+//   password: 'pg123',
+//   database: 'greetings_database',
+//   host: 'localhost',
+//   port: 5432,
+// });
 export default function GreetEveryone() {
   let message = '';
 
