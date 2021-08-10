@@ -24,7 +24,9 @@ const connectionString =
 
 const pool = new Pool({
   connectionString,
-  ssl: useSSL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 export default function GreetEveryone() {
   let message = '';
