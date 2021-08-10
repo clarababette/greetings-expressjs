@@ -7,27 +7,21 @@ import session from 'express-session';
 const app = express();
 const greetMe = new GreetEveryone();
 import pg from 'pg';
-const Client = pg.Client;
+const Pool = pg.Pool;
 
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+let useSSL = false;
+let local = process.env.LOCAL || false;
+if (process.env.DATABASE_URL && !local) {
+  useSSL = true;
+}
+
+const connectionString =
+  process.env.DATABASE_URL || 'postgresql://localhost:5432/my_products';
+
+const pool = new Pool({
+  connectionString,
+  ssl: useSSL,
 });
-
-client.connect();
-
-client.query(
-  'SELECT table_schema,table_name FROM information_schema.tables;',
-  (err, res) => {
-    if (err) throw err;
-    for (let row of res.rows) {
-      console.log(JSON.stringify(row));
-    }
-    client.end();
-  }
-);
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
