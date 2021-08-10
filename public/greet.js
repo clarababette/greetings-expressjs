@@ -9,6 +9,23 @@
 //   host: 'localhost',
 //   port: 5432,
 // });
+
+import pg from 'pg';
+const Pool = pg.Pool;
+
+let useSSL = false;
+let local = process.env.LOCAL || false;
+if (process.env.DATABASE_URL && !local) {
+  useSSL = true;
+}
+
+const connectionString =
+  process.env.DATABASE_URL || 'postgresql://localhost:5432/greetings_database';
+
+const pool = new Pool({
+  connectionString,
+  ssl: useSSL,
+});
 export default function GreetEveryone() {
   let message = '';
 
