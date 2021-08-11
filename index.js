@@ -1,17 +1,11 @@
 'use strict';
 import express from 'express';
 import exphbs from 'express-handlebars';
-import GreetEveryone from './public/greet.js';
+import greetings from './public/greet.js';
 import flash from 'express-flash';
 import session from 'express-session';
 import pg from 'pg';
 const Pool = pg.Pool;
-
-let useSSL = false;
-let local = process.env.LOCAL || false;
-if (process.env.DATABASE_URL && !local) {
-  useSSL = true;
-}
 
 const connectionString =
   process.env.DATABASE_URL || 'postgresql://localhost:5432/greetings_database';
@@ -23,7 +17,7 @@ const pool = new Pool({
   },
 });
 const app = express();
-const greetMe = new GreetEveryone();
+const greetMe = greetings(pool);
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -33,11 +27,11 @@ app.use(express.json());
 
 app.use(express.static('public'));
 app.use(
-  session({
-    secret: 'reincarnated as a wild horse on the far off planet called Nearly.',
-    resave: false,
-    saveUninitialized: true,
-  })
+    session({
+      secret: 'reincarnated as a wild horse on the far off planet Nearly.',
+      resave: false,
+      saveUninitialized: true,
+    }),
 );
 app.use(flash());
 

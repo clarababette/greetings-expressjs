@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 
-export default function GreetEveryone() {
+export default function greetings(pool) {
   let message = '';
 
   async function getAll() {
@@ -10,31 +10,31 @@ export default function GreetEveryone() {
 
   async function addUser(name) {
     await pool.query(
-      `INSERT INTO users (username,english,hungarian,swahili) VALUES ($1,0,0,0) ON 
+        `INSERT INTO users (username,english,hungarian,swahili) VALUES ($1,0,0,0) ON 
           CONFLICT (username) DO NOTHING;`,
-      [name]
+        [name],
     );
   }
 
   async function updateSwaCount(name) {
     const userData = await pool.query(
-      `UPDATE users SET swahili = swahili+1 WHERE users.username = $1 RETURNING *`,
-      [name]
+        `UPDATE users SET swahili = swahili+1 WHERE users.username = $1 RETURNING *`,
+        [name],
     );
     return userData.rows[0];
   }
 
   async function updateEngCount(name) {
     const userData = await pool.query(
-      'UPDATE users SET english = english+1 WHERE users.username = $1 RETURNING *',
-      [name]
+        'UPDATE users SET english = english+1 WHERE users.username = $1 RETURNING *',
+        [name],
     );
     return userData.rows[0];
   }
   async function updateHungCount(name) {
     const userData = await pool.query(
-      'UPDATE users SET hungarian = hungarian+1 WHERE users.username = $1 RETURNING *',
-      [name]
+        'UPDATE users SET hungarian = hungarian+1 WHERE users.username = $1 RETURNING *',
+        [name],
     );
     return userData.rows[0];
   }
@@ -161,8 +161,8 @@ export default function GreetEveryone() {
 
   async function userRoute(req, res) {
     let thisUser = await pool.query(
-      'SELECT * FROM users WHERE users.username = $1',
-      [req.params.user]
+        'SELECT * FROM users WHERE users.username = $1',
+        [req.params.user],
     );
     thisUser = thisUser.rows[0];
     res.render('user', {
