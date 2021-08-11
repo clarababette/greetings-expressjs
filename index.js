@@ -4,6 +4,24 @@ import exphbs from 'express-handlebars';
 import GreetEveryone from './public/greet.js';
 import flash from 'express-flash';
 import session from 'express-session';
+import pg from 'pg';
+const Pool = pg.Pool;
+
+let useSSL = false;
+let local = process.env.LOCAL || false;
+if (process.env.DATABASE_URL && !local) {
+  useSSL = true;
+}
+
+const connectionString =
+  process.env.DATABASE_URL || 'postgresql://localhost:5432/greetings_database';
+
+const pool = new Pool({
+  connectionString,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 const app = express();
 const greetMe = new GreetEveryone();
 

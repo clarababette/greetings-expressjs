@@ -1,33 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
-// import pg from 'pg';
-// const Pool = pg.Pool;
-// const pool = new Pool({
-//   user: 'coder',
-//   password: 'pg123',
-//   database: 'greetings_database',
-//   host: 'localhost',
-//   port: 5432,
-// });
 
-import pg from 'pg';
-const Pool = pg.Pool;
-
-let useSSL = false;
-let local = process.env.LOCAL || false;
-if (process.env.DATABASE_URL && !local) {
-  useSSL = true;
-}
-
-const connectionString =
-  process.env.DATABASE_URL || 'postgresql://localhost:5432/greetings_database';
-
-const pool = new Pool({
-  connectionString,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
 export default function GreetEveryone() {
   let message = '';
 
