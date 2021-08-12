@@ -89,8 +89,8 @@ export default function greetings(pool) {
 
   // Database Queries
   async function getAll() {
-    const users = await pool.query('SELECT * FROM users');
-    return users.rows;
+    const users = await pool.query('SELECT username FROM users');
+    return users;
   }
 
   async function addUser(name) {
@@ -139,6 +139,7 @@ export default function greetings(pool) {
   // Routes
   async function indexRoute(req, res) {
     const all = await getAll();
+    console.log(all);
     let message = '';
     if (req.session.views) {
       message = returnMsg(req.session.newUser, all.length);
