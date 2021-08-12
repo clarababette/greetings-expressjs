@@ -145,10 +145,8 @@ export default function greetings(pool) {
     let message = '';
     if (req.session.views) {
       message = returnMsg(req.session.newUser, all.length);
-      req.session.views++;
     } else {
       message = startMsg(all.length);
-      req.session.views = 1;
     }
     delete req.session.newUser;
     res.render('index', {info: message});
@@ -166,6 +164,7 @@ export default function greetings(pool) {
       req.flash('error', error);
     } else {
       const all = await getAll();
+      req.session.views = 1;
       if (!all.includes(name)) {
         await addUser(name);
         req.session.newUser = true;
