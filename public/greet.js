@@ -22,22 +22,24 @@ export default function greetings(pool) {
   }
 
   async function getGreeting(lang, name) {
+    let greeting = '';
     switch (lang) {
       case 'english':
         await updateEngCount(name);
-        return `Hello, ${name}`;
+        greeting = `Hello, ${name}`;
 
       case 'swahili':
         await updateSwaCount(name);
-        return `Jambo, ${name}`;
+        greeting = `Jambo, ${name}`;
 
       case 'hungarian':
         await updateHungCount(name);
-        return `Szia, ${name}`;
+        greeting = `Szia, ${name}`;
 
       default:
         break;
     }
+    return greeting;
   }
 
   function langCount(name, num, lang) {
