@@ -90,7 +90,9 @@ export default function greetings(pool) {
   // Database Queries
   async function getAll() {
     const users = await pool.query('SELECT username FROM users');
-    return users.rows;
+    return users.rows.map((user) => {
+      return user.username;
+    });
   }
 
   async function addUser(name) {
@@ -139,9 +141,7 @@ export default function greetings(pool) {
   // Routes
   async function indexRoute(req, res) {
     const all = await getAll();
-    console.log(all.map((user) => {
-      return user.username;
-    }));
+    console.log(all);
     let message = '';
     if (req.session.views) {
       message = returnMsg(req.session.newUser, all.length);
