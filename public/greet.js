@@ -170,19 +170,21 @@ export default function greetings(pool) {
       if (!all.includes(name)) {
         await addUser(name);
         req.session.newUser = true;
-        req.flash('greeting', getGreeting(lang, name));
+        req.flash('greeting', await getGreeting(lang, name));
       } else {
-        req.flash('greeting', getGreeting(lang, name));
+        req.flash('greeting', await getGreeting(lang, name));
       }
     }
     res.redirect('/');
   }
   async function resetRoute(req, res) {
+    delete req.session.views;
     await deleteAll();
     res.redirect('/');
   }
   async function greetedRoute(req, res) {
     const usernames = await getAll();
+    delete req.session.views;
     res.render('visitors', {userList: usernames.map((name) => {
       return {username: name, userRoute: `/counter/${name}`};
     })});
