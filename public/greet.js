@@ -183,7 +183,7 @@ export default function greetings(pool) {
   async function greetedRoute(req, res) {
     const usernames = await getAll();
     res.render('visitors', {userList: usernames.map((name) => {
-      return {username: name, userRoute: `/counter/${username}`};
+      return {username: name, userRoute: `/counter/${name}`};
     })});
   }
   async function userRoute(req, res) {
