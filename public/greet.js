@@ -139,7 +139,7 @@ export default function greetings(pool) {
   // Routes
   async function indexRoute(req, res) {
     const all = await getAll();
-    const message = '';
+    let message = '';
     if (req.session.views) {
       message = returnMsg(req.session.newUser, all.length);
       req.session.views++;
