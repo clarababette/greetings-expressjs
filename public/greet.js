@@ -27,14 +27,15 @@ export default function greetings(pool) {
       case 'english':
         await updateEngCount(name);
         greeting = `Hello, ${name}`;
-
+        break;
       case 'swahili':
         await updateSwaCount(name);
         greeting = `Jambo, ${name}`;
-
+        break;
       case 'hungarian':
         await updateHungCount(name);
         greeting = `Szia, ${name}`;
+        break;
 
       default:
         break;
