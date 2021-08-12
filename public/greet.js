@@ -39,6 +39,9 @@ export default function greetings(pool) {
       default:
         break;
     }
+    console.log(lang);
+    console.log(name);
+    console.log(greeting);
     return greeting;
   }
 
