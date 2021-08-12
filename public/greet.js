@@ -2,10 +2,95 @@
 /* eslint-disable require-jsdoc */
 
 export default function greetings(pool) {
-  let message = '';
+  function startMsg(count) {
+    switch (count) {
+      case 0:
+        return 'Go ahead; enter your name to be the first one greeted!';
 
+      case 1:
+        return 'Join the one other person to have been greeted.';
+
+      default:
+        return `Join the ${count} other people that have already been greeted!`;
+    }
+  }
+
+  function formatName(name) {
+    const formattedName = name.trim().toLowerCase();
+
+    return formattedName[0].toUpperCase() + formattedName.slice(1);
+  }
+
+  async function getGreeting(lang, name) {
+    switch (lang) {
+      case 'english':
+        await updateEngCount(name);
+        return `Hello, ${name}`;
+
+      case 'swahili':
+        await updateSwaCount(name);
+        return `Jambo, ${name}`;
+
+      case 'hungarian':
+        await updateHungCount(name);
+        return `Szia, ${name}`;
+
+      default:
+        break;
+    }
+  }
+
+  function langCount(name, num, lang) {
+    switch (num) {
+      case 0:
+        return 'We have not yet greeted ' + name + ' in ' + lang + '.';
+      case 1:
+        return 'We have greeted ' + name + ' once in ' + lang + '.';
+      case 2:
+        return 'We have greeted ' + name + ' twice in ' + lang + '.';
+      default:
+        return (
+          'We have greeted ' + name + ' in ' + lang + ' ' + num + ' times.'
+        );
+    }
+  }
+
+  async function langInfo(username) {
+    const thisUser = await getUser(username);
+    const info = {
+      english: langCount(username, thisUser.english, 'English'),
+      swahili: langCount(username, thisUser.swahili, 'Swahili'),
+      hungarian: langCount(username, thisUser.hungarian, 'Hugarian'),
+    };
+    return info;
+  }
+
+  function returnMsg(newUser, total) {
+    if (newUser && total == 1) {
+      return 'Congrats! You are the first person to be greeted.';
+    } else if (newUser && total > 1) {
+      return `You are now part of the ${total} people that have been greeted.`;
+    }
+    return 'Welcome back!';
+  }
+
+  function validateInputs(name, language) {
+    if (!name) {
+      return 'Please enter your name.';
+    }
+    if (!language) {
+      return 'Please select a language.';
+    }
+    const notLetter = /[^A-z]/g;
+    if (notLetter.test(name)) {
+      return 'Enter a name that only contains letters.';
+    }
+  }
+
+  // Database Queries
   async function getAll() {
-    return await pool.query('SELECT * FROM users');
+    const users = await pool.query('SELECT * FROM users');
+    return users.rows;
   }
 
   async function addUser(name) {
@@ -39,138 +124,75 @@ export default function greetings(pool) {
     return userData.rows[0];
   }
 
-  function startMsg(count) {
-    switch (count) {
-      case 0:
-        return 'Go ahead; enter your name to be the first one greeted!';
-
-      case 1:
-        return 'Join the one other person to have been greeted.';
-
-      default:
-        return `Join the ${count} other people that have already been greeted!`;
-    }
+  async function getUser(username) {
+    const user = await pool.query(
+        'SELECT * FROM users WHERE users.username = $1',
+        [username],
+    );
+    return user.rows[0];
   }
 
+  async function deleteAll() {
+    await pool.query('DELETE FROM users');
+  }
+
+  // Routes
   async function indexRoute(req, res) {
     const all = await getAll();
-    if (message == '') {
-      req.flash('info', startMsg(all.rowCount));
+    const message = '';
+    if (req.session.views) {
+      message = returnMsg(req.session.newUser, all.length);
+      req.session.views++;
+    } else {
+      message = startMsg(all.length);
+      req.session.views = 1;
     }
-    message = '';
-    res.render('index');
+    delete req.session.newUser;
+    res.render('index', {info: message});
   }
 
-  function formatName(name) {
-    const formattedName = name.trim().toLowerCase();
-
-    return formattedName[0].toUpperCase() + formattedName.slice(1);
-  }
-
-  async function getGreeting(lang, name) {
-    let userData = '';
-    switch (lang) {
-      case 'english':
-        userData = await updateEngCount(name);
-        userData.greeting = `Hello, ${name}`;
-        break;
-
-      case 'swahili':
-        userData = await updateSwaCount(name);
-        userData.greeting = `Jambo, ${name}`;
-        break;
-
-      case 'hungarian':
-        userData = await updateHungCount(name);
-        userData.greeting = `Szia, ${name}`;
-        break;
-
-      default:
-        break;
-    }
-    return userData;
-  }
 
   async function greetRoute(req, res) {
-    // console.log(req.locals.messages);
     let name = req.body.username;
-    const lang = req.body.languageRadio;
-    try {
-      if (!name) throw new Error('Please enter your name.');
-
+    if (name) {
       name = formatName(name);
-      const notLetter = /[^A-z]/g;
-      if (notLetter.test(name)) {
-        throw new Error('Enter a name that only contains letters.');
-      }
-      if (!lang) throw new Error('Please select a language.');
-      await addUser(name);
-      const userData = await getGreeting(lang, name);
-      const allUsers = await getAll();
-      const userTotal =
-        userData.english + userData.swahili + userData.hungarian;
-
-      if (userTotal == 1) {
-        if (allUsers.rowCount == 1) {
-          userData.message =
-            'Congrats! You are the first person to be greeted.';
-        } else {
-          userData.message = `You are now part of the ${allUsers.rowCount} people that have been greeted.`;
-        }
+    }
+    const lang = req.body.languageRadio;
+    const error = validateInputs(name, lang);
+    if (error) {
+      req.flash('error', error);
+    } else {
+      const all = await getAll();
+      if (!all.includes(name)) {
+        await addUser(name);
+        req.session.newUser = true;
+        req.flash(greeting, getGreeting(lang, name));
       } else {
-        userData.message = 'Welcome back!';
+        req.flash(greeting, getGreeting(lang, name));
       }
-      message = userData.message;
-      req.flash('greeting', userData.greeting);
-      req.flash('info', message);
-    } catch (err) {
-      req.flash('error', err.message);
     }
     res.redirect('/');
   }
-
   async function resetRoute(req, res) {
-    await pool.query('DELETE FROM users');
+    await deleteAll();
     res.redirect('/');
   }
-
   async function greetedRoute(req, res) {
-    const all = await getAll();
-    const users = all.rows;
+    const users = await getAll();
     users.forEach((row) => {
       row.userRoute = `/counter/${row.username}`;
     });
-    console.log(users);
     res.render('visitors', {userList: users});
   }
-
-  function langInfo(name, num, lang) {
-    switch (num) {
-      case 0:
-        return 'We have not yet greeted ' + name + ' in ' + lang + '.';
-      case 1:
-        return 'We have greeted ' + name + ' once in ' + lang + '.';
-      case 2:
-        return 'We have greeted ' + name + ' twice in ' + lang + '.';
-      default:
-        return (
-          'We have greeted ' + name + ' in ' + lang + ' ' + num + ' times.'
-        );
-    }
-  }
-
   async function userRoute(req, res) {
-    let thisUser = await pool.query(
-        'SELECT * FROM users WHERE users.username = $1',
-        [req.params.user],
-    );
-    thisUser = thisUser.rows[0];
+    const thisUser = await langInfo(req.params.user);
     res.render('user', {
-      english: langInfo(thisUser.username, thisUser.english, 'English'),
-      swahili: langInfo(thisUser.username, thisUser.swahili, 'Swahili'),
-      hungarian: langInfo(thisUser.username, thisUser.hungarian, 'Hungarian'),
+      english: thisUser.english,
+      swahili: thisUser.swahili,
+      hungarian: thisUser.hungarian,
     });
   }
+
   return {
     indexRoute,
     greetRoute,
