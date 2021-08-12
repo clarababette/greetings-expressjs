@@ -181,11 +181,10 @@ export default function greetings(pool) {
     res.redirect('/');
   }
   async function greetedRoute(req, res) {
-    const users = await getAll();
-    users.forEach((row) => {
-      row.userRoute = `/counter/${row.username}`;
-    });
-    res.render('visitors', {userList: users});
+    const usernames = await getAll();
+    res.render('visitors', {userList: usernames.map((name) => {
+      return {username: name, userRoute: `/counter/${username}`};
+    })});
   }
   async function userRoute(req, res) {
     const thisUser = await langInfo(req.params.user);
