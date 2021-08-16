@@ -19,7 +19,7 @@ const connectionString =
 
 const pool = new Pool({
   connectionString,
-  ssl: useSSL,
+  ssl: false,
 });
 const app = express();
 const greetMe = greetings(pool);
