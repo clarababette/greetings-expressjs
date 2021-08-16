@@ -27,6 +27,8 @@ describe('The greetings app', () => {
   });
   it('should record the number of times a users has been greeted in a language',
       async function() {
+        const all = await greet.getAll;
+        console.log(all);
         await greet.updateEngCount('Martin');
         await greet.updateEngCount('Martin');
         await greet.updateSwaCount('Martin');
@@ -36,9 +38,10 @@ describe('The greetings app', () => {
         await greet.updateHungCount('Martin');
 
         let userCount = await greet.getUser('Martin');
-        assert.deepStrictEqual(
-            {username: 'Martin', english: 2, swahili: 1, hungarian: 3},
-            userCount);
+        const martin = {
+          username: 'Martin', english: 2, swahili: 1, hungarian: 3,
+        };
+        assert.deepStrictEqual(martin, userCount);
 
         userCount = await greet.getUser('Arthur');
         assert.deepStrictEqual(
