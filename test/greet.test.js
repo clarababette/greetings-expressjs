@@ -11,10 +11,8 @@ const pool = new Pool({
 
 const greet = greetings(pool);
 
-describe('The greetings app', () => {
-  beforeEach(async function() {
-    await pool.query('delete from users;');
-  });
+describe('The greetings app', async () => {
+  await pool.query('delete from users;');
 
   it('should add new users to the database', async function() {
     await greet.addUser('Martin');
@@ -27,8 +25,6 @@ describe('The greetings app', () => {
   });
   it('should record the number of times a users has been greeted in a language',
       async function() {
-        const all = await greet.getAll();
-        console.log(all);
         await greet.updateEngCount('Martin');
         await greet.updateEngCount('Martin');
         await greet.updateSwaCount('Martin');
@@ -38,15 +34,12 @@ describe('The greetings app', () => {
         await greet.updateHungCount('Martin');
 
         let userCount = await greet.getUser('Martin');
-        const martin = {
-          username: 'Martin', english: 2, swahili: 1, hungarian: 3,
-        };
-        assert.deepStrictEqual(martin, userCount);
+        assert.deepStrictEqual(userCount,
+            {username: 'Martin', english: 2, swahili: 1, hungarian: 3});
 
         userCount = await greet.getUser('Arthur');
-        assert.deepStrictEqual(
-            {username: 'Arthur', english: 0, swahili: 1, hungarian: 0},
-            userCount);
+        assert.deepStrictEqual(userCount,
+            {username: 'Arthur', english: 0, swahili: 1, hungarian: 0});
       });
 
   it('should add new users to the database', async function() {
@@ -64,9 +57,5 @@ describe('The greetings app', () => {
     const users = await greet.getAll();
     assert.deepStrictEqual(['Martin'], users);
   });
-
-
-  after(function() {
-    pool.end();
-  });
+  await pool.end();
 });
