@@ -18,9 +18,50 @@ describe('The greetings app', () => {
 
   it('should add new users to the database', async function() {
     await greet.addUser('Martin');
+    let users = await greet.getAll();
+    assert.deepStrictEqual(['Martin'], users);
+    await greet.addUser('Arthur');
+    await greet.addUser('Doughlas');
+    users = await greet.getAll();
+    assert.deepStrictEqual(['Martin', 'Arthur', 'Doughlas'], users);
+  });
+  it('should record the number of times a users has been greeted in a language',
+      async function() {
+        await greet.updateEngCount('Martin');
+        await greet.updateEngCount('Martin');
+        await greet.updateSwaCount('Martin');
+        await greet.updateSwaCount('Arthur');
+        await greet.updateHungCount('Martin');
+        await greet.updateHungCount('Martin');
+        await greet.updateHungCount('Martin');
+
+        let userCount = await greet.getUser('Martin');
+        assert.deepStrictEqual(
+            {username: 'Martin', english: 2, swahili: 1, hungarian: 3},
+            userCount);
+
+        userCount = await greet.getUser('Arthur');
+        assert.deepStrictEqual(
+            {username: 'Arthur', english: 0, swahili: 1, hungarian: 0},
+            userCount);
+      });
+
+  it('should add new users to the database', async function() {
+    await greet.addUser('Martin');
     const users = await greet.getAll();
     assert.deepStrictEqual(['Martin'], users);
   });
+  it('should add new users to the database', async function() {
+    await greet.addUser('Martin');
+    const users = await greet.getAll();
+    assert.deepStrictEqual(['Martin'], users);
+  });
+  it('should add new users to the database', async function() {
+    await greet.addUser('Martin');
+    const users = await greet.getAll();
+    assert.deepStrictEqual(['Martin'], users);
+  });
+
 
   after(function() {
     pool.end();
