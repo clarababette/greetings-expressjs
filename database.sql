@@ -1,6 +1,5 @@
 create table users(
-	id serial not null primary key,
-	username text not null unique,
+	username text not null unique primary key,
   english int,
   hungarian int,
   swahili int
