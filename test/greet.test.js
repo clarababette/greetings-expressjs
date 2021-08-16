@@ -1,6 +1,6 @@
-const assert = require('assert');
+import assert from 'assert';
 import greetings from '../public/greet.js';
-const pg = require('pg');
+import pg from 'pg';
 const Pool = pg.Pool;
 
 const connectionString = process.env.DATABASE_URL || 'postgresql://localhost:5432/greetings_test';
