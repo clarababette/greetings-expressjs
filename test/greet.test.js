@@ -60,8 +60,8 @@ describe('The greetings app', () => {
     assert.deepStrictEqual([], users);
   });
 
-  it('should greeting someone in the language of their choosing', function() {
-    const greeting = greet.getGreeting('english', 'Doughlas');
+  it('should greeting someone in the language of their choosing', async function() {
+    const greeting = await greet.getGreeting('english', 'Doughlas');
     assert.strictEqual(greeting, 'Hello, Doughlas');
   });
 
