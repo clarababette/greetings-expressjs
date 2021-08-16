@@ -1,5 +1,5 @@
 const assert = require('assert');
-import greetings from './public/greet.js';
+import greetings from '../public/greet.js';
 const pg = require('pg');
 const Pool = pg.Pool;
 
