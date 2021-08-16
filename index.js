@@ -7,12 +7,19 @@ import session from 'express-session';
 import pg from 'pg';
 const Pool = pg.Pool;
 
+
+let useSSL = false;
+const local = process.env.LOCAL || false;
+if (process.env.DATABASE_URL && !local) {
+  useSSL = true;
+}
+
 const connectionString =
   process.env.DATABASE_URL || 'postgresql://localhost:5432/greetings_database';
 
 const pool = new Pool({
   connectionString,
-  ssl: process.env.DATABASE_URL ? true : false,
+  ssl: useSSL,
 });
 const app = express();
 const greetMe = greetings(pool);
