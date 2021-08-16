@@ -27,7 +27,7 @@ describe('The greetings app', () => {
   });
   it('should record the number of times a users has been greeted in a language',
       async function() {
-        const all = await greet.getAll;
+        const all = await greet.getAll();
         console.log(all);
         await greet.updateEngCount('Martin');
         await greet.updateEngCount('Martin');
