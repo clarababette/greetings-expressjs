@@ -19,7 +19,7 @@ describe('The greetings app', () => {
   it('should add new users to the database', async function() {
     await greet.addUser('Martin');
     const users = await greet.getAll();
-    assert.strictEqual(['Martin'], users);
+    assert.strictDeepEqual(['Martin'], users);
   });
 
   after(function() {
