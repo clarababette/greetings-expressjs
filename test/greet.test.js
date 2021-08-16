@@ -60,10 +60,16 @@ describe('The greetings app', () => {
     assert.deepStrictEqual([], users);
   });
 
-  it('should greeting someone in the language of their choosing', async function() {
-    const greeting = await greet.getGreeting('english', 'Doughlas');
-    assert.strictEqual(greeting, 'Hello, Doughlas');
-  });
+  it('should greeting someone in the language of their choosing',
+      async () => {
+        let greeting = await greet.getGreeting('english', 'Doughlas');
+        assert.strictEqual(greeting, 'Hello, Doughlas');
+        greeting = await greet.getGreeting('swahili', 'Doughlas');
+        assert.strictEqual(greeting, 'Jambo, Doughlas');
+        greeting = await greet.getGreeting('hungarian', 'Doughlas');
+        assert.strictEqual(greeting, 'Szia, Doughlas');
+      });
+
 
   after(function() {
     pool.end();
