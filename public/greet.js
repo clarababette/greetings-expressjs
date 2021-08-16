@@ -40,9 +40,6 @@ export default function greetings(pool) {
       default:
         break;
     }
-    console.log(lang);
-    console.log(name);
-    console.log(greeting);
     return greeting;
   }
 
@@ -203,6 +200,20 @@ export default function greetings(pool) {
   }
 
   return {
+    startMsg,
+    formatName,
+    getGreeting,
+    langCount,
+    langInfo,
+    returnMsg,
+    validateInputs,
+    getAll,
+    addUser,
+    updateSwaCount,
+    updateEngCount,
+    updateHungCount,
+    getUser,
+    deleteAll,
     indexRoute,
     greetRoute,
     resetRoute,
