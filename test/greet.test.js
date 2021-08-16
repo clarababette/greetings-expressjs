@@ -47,22 +47,23 @@ describe('The greetings app', () => {
             userCount);
       });
 
-  it('should add new users to the database', async function() {
+  it('should be able to delete all users', async function() {
     await greet.addUser('Martin');
-    const users = await greet.getAll();
+    let users = await greet.getAll();
     assert.deepStrictEqual(['Martin'], users);
-  });
-  it('should add new users to the database', async function() {
-    await greet.addUser('Martin');
-    const users = await greet.getAll();
-    assert.deepStrictEqual(['Martin'], users);
-  });
-  it('should add new users to the database', async function() {
-    await greet.addUser('Martin');
-    const users = await greet.getAll();
-    assert.deepStrictEqual(['Martin'], users);
+    await greet.addUser('Arthur');
+    await greet.addUser('Doughlas');
+    users = await greet.getAll();
+    assert.deepStrictEqual(['Martin', 'Arthur', 'Doughlas'], users);
+    await greet.deleteAll();
+    users = await greet.getAll();
+    assert.deepStrictEqual([], users);
   });
 
+  it('should greeting someone in the language of their choosing', function() {
+    const greeting = greet.getGreeting('english', 'Doughlas');
+    assert.strictEqual(greeting, 'Hello, Doughlas');
+  });
 
   after(function() {
     pool.end();
