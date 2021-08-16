@@ -113,7 +113,6 @@ export default function greetings(pool) {
     );
     return userData.rows[0];
   }
-
   async function updateEngCount(name) {
     const userData = await pool.query(
         'UPDATE users SET english = english+1 WHERE users.username = $1 RETURNING *',
@@ -128,7 +127,6 @@ export default function greetings(pool) {
     );
     return userData.rows[0];
   }
-
   async function getUser(username) {
     const user = await pool.query(
         'SELECT * FROM users WHERE users.username = $1',
@@ -136,7 +134,6 @@ export default function greetings(pool) {
     );
     return user.rows[0];
   }
-
   async function deleteAll() {
     await pool.query('DELETE FROM users');
   }
