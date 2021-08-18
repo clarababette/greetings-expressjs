@@ -60,7 +60,14 @@ export default function greetings(pool) {
 
   async function langInfo(username) {
     const thisUser = await getUser(username);
+    let totalCount = thisUser.english + thisUser.swahili + thisUser.hungarian;
+    if (totalCount == 1) {
+      totalCount = `We have greeted ${username} only once`;
+    } else {
+      totalCount = `We have greeted ${username} a total of ${thisUser.total} times`;
+    }
     const info = {
+      total: totalCount,
       english: langCount(username, thisUser.english, 'English'),
       swahili: langCount(username, thisUser.swahili, 'Swahili'),
       hungarian: langCount(username, thisUser.hungarian, 'Hugarian'),
@@ -149,6 +156,7 @@ export default function greetings(pool) {
       message = startMsg(all.length);
     }
     delete req.session.newUser;
+    delete req.session.views;
     res.render('index', {info: message});
   }
 
@@ -190,6 +198,7 @@ export default function greetings(pool) {
   async function userRoute(req, res) {
     const thisUser = await langInfo(req.params.user);
     res.render('user', {
+      total: thisUser.total,
       english: thisUser.english,
       swahili: thisUser.swahili,
       hungarian: thisUser.hungarian,
