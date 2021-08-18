@@ -148,7 +148,6 @@ export default function greetings(pool) {
   // Routes
   async function indexRoute(req, res) {
     const all = await getAll();
-    console.log(all);
     let message = '';
     if (req.session.views) {
       message = returnMsg(req.session.newUser, all.length);
@@ -157,7 +156,7 @@ export default function greetings(pool) {
     }
     delete req.session.newUser;
     delete req.session.views;
-    res.render('index', {info: message});
+    res.render('index', {info: message, total: `Total greeted: ${all.length}`});
   }
 
 
